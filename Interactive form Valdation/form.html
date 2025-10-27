@@ -1,0 +1,169 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation Example</title>
+    <style>
+        /* General body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            height: 100vh;
+        }
+
+        /* Form container styles */
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight:bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input{
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            background-color: white;
+            color: white;
+            padding: 12px 20px;
+            border: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            // Get form elements
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var message = document.getElementById("message").value;
+
+            // Reset previous error messages
+            var errorMessages = document.querySelectorAll('.error');
+            errorMessages.forEach(function(msg) {
+                msg.remove();
+            });
+
+            var isValid = true;
+
+            // Check if Name is empty
+            if (name == "") {
+                displayError("name", "Name must be filled out");
+                isValid = false;
+            }
+
+            // Check if Email is empty or invalid
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (email == "") {
+                displayError("email", "Email must be filled out");
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                displayError("email", "Please enter a valid email address");
+                isValid = false;
+            }
+
+            // Check if Password is empty or too short
+            if (password == "") {
+                displayError("password", "Password must be filled out");
+                isValid = false;
+            } else if (password.length < 6) {
+                displayError("password", "Password must be at least 6 characters long");
+                isValid = false;
+            }
+
+            // Check if Message is empty
+            if (message == "") {
+                displayError("message", "Message cannot be empty");
+                isValid = false;
+            }
+
+            // If form is valid, return true
+            return isValid;
+        }
+
+        function displayError(fieldId, message) {
+            var field = document.getElementById(fieldId);
+            var errorMessage = document.createElement("div");
+            errorMessage.classList.add("error");
+            errorMessage.textContent = message;
+            field.parentNode.insertBefore(errorMessage, field.nextSibling);
+        }
+    </script>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Contact Form</h2>
+
+    <form id="my form" onsubmit="return validateForm()">
+        <h2>Registration Form</h2>
+
+        <label>Full name:</label>
+        <input type="text" id="name" placeholder="enter your name">
+        <div id="nameError" class="error"></div>
+
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="enter your Email">
+        <div id="Email Error" class="error"></div>
+
+        <label>Password:</label>
+        <input type="password" id="password" placeholder="enter your password">
+        <div id="password Error" class="error"></div>
+
+        <label>confirm Password:</label>
+        <input type="password" id="confirm" placeholder="enter your confirm password">
+    <center>
+        <button type="submit">submit</button> 
+    </center>
+    </form>
+</div>
+
+</body>
+</html>
